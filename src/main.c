@@ -42,7 +42,7 @@ int main(int argc, char **argv)
 	if (fd <= 0)
 		goto error;
 	num = get_next_line(fd);
-	framecount = atoi(num) - 1;
+	framecount = atoi(num);
 
 	char	**frames;
 	char	*raw;
