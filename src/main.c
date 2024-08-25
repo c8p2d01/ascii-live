@@ -94,7 +94,10 @@ void print_indefinetly(char **frames, int framecount){
   while (1)
   {
     usleep(100000);
-	free(print_color2);
+	if (print_color2){
+		free(print_color2);
+		print_color2 = NULL;
+	}
 	ft_memset(print_color, 'A', 100);
     sprintf(print_color, "\e[0m\n\e[38;2;%i;%i;%im", (i>>16), (i>>8)%256, i%256);
 	print_color2 = ft_strtrim(print_color, "A");
@@ -133,7 +136,10 @@ void print_indefinetly(char **frames, int framecount){
 	  {
 		str_sed(&copy, "\n", print_color2);
 		printf("\e[1;1H\e[2J%s\e[0m", copy);
-		free(copy);
+		if (copy){
+			free(copy);
+			copy = NULL;
+		}
 	  }
 	  f %= framecount;
   }
