@@ -66,10 +66,14 @@ int main(int argc, char **argv)
 	print_indefinetly(frames, framecount);
 
 error:
-	if (filename)
+	if (filename){
 		free(filename);
-	if (command)
+		filename = NULL;
+	}
+	if (command){
 		free(command);
+		command = NULL;
+	}
 	return (1);
 	
 }
@@ -82,7 +86,7 @@ void print_indefinetly(char **frames, int framecount){
   int i;
   int f = 0;
 
-  char	*print_color = calloc(42, sizeof(char));
+  char	*print_color = calloc(101, sizeof(char));
   char	*print_color2 = calloc(1, 1);
   char	*copy;
 
@@ -91,7 +95,7 @@ void print_indefinetly(char **frames, int framecount){
   {
     usleep(100000);
 	free(print_color2);
-	ft_memset(print_color, 'A', 21);
+	ft_memset(print_color, 'A', 100);
     sprintf(print_color, "\e[0m\n\e[38;2;%i;%i;%im", (i>>16), (i>>8)%256, i%256);
 	print_color2 = ft_strtrim(print_color, "A");
     ((i>>16)%256 >= 255) ?
@@ -125,9 +129,12 @@ void print_indefinetly(char **frames, int framecount){
       :
       _();
 	  copy = ft_strdup(frames[f++]);
-	  str_sed(&copy, "\n", print_color2);
-	  printf("\e[1;1H\e[2J%s\e[0m", copy);
-	  free(copy);
+	  if (copy)
+	  {
+		str_sed(&copy, "\n", print_color2);
+		printf("\e[1;1H\e[2J%s\e[0m", copy);
+		free(copy);
+	  }
 	  f %= framecount;
   }
 }
