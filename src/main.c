@@ -7,13 +7,13 @@
 
 void print_indefinetly(char **frames, int framecount);
 
+	char	*filename;
 int main(int argc, char **argv)
 {
 	if (argc < 2 || argc > 3)
 		return (1);
 	
 	//file finder
-	char	*filename;
 	int		namelength = 0;
 	char	path[] = "./frames/.go";
 	int		file;
@@ -43,6 +43,8 @@ int main(int argc, char **argv)
 		goto error;
 	num = get_next_line(fd);
 	framecount = atoi(num);
+	free(num);
+	close(fd);
 
 	char	**frames;
 	char	*raw;
@@ -53,7 +55,10 @@ int main(int argc, char **argv)
 		free(raw);
 		raw = get_until(file, '`');
 		frames[i] = ft_strtrim(raw, "`");
+		free(raw);
 	}
+	free(filename);
+	close(file);
 
 	print_indefinetly(frames, framecount);
 
