@@ -46,6 +46,9 @@ int main(int argc, char **argv)
 	free(num);
 	close(fd);
 
+	if (num <= 0)
+		return (printf("no frames found\n") * 0 + 1);
+
 	char	**frames;
 	char	*raw;
 	frames = calloc(framecount + 1, sizeof(char *));
